@@ -13,6 +13,8 @@ def options_manager():
         insert_user()
     elif option == 4:
         update_by_username()
+    elif option == 5:
+        delete_by_username()
 
 
 def insert_user():
@@ -47,6 +49,7 @@ def search_by_username():
     username = input("Ingrese el username del usuario que desea encontrar: ")
     find_username(username=username)
 
+
 def update_by_username():
     console.print_update_user()
     username = input("Ingrese el username del usuario que desea actualizar: ")
@@ -63,8 +66,8 @@ def update_by_username():
     print(
         "------------------------- \n INGRESAR NUEVOS DATOS (deje vacío para no cambiar)"
     )
-    #short circuit evaluation con or
-    #pide el valor por input si el valor es "" lo toma como false y toma como valor por defecto lo que esta despues de or
+    # short circuit evaluation con or
+    # pide el valor por input si el valor es "" lo toma como false y toma como valor por defecto lo que esta despues de or
     # c = a or b -----> si a = false entonces c = b pero si a = true entonces c = a
     username = input(f"Username [{data['username']}]: ") or data["username"]
     name = input(f"Nombre [{data['name']}]: ") or data["name"]
@@ -95,4 +98,19 @@ def update_by_username():
     }
 
     res = collection.update_one(filter, update)
-    print(f"Documentos modificados: {res.modified_count}") #Para mostrar la cantidad de registros que fueron modificados.
+    print(
+        f"Documentos modificados: {res.modified_count}"
+    )  # Para mostrar la cantidad de registros que fueron modificados.
+
+
+def delete_by_username():
+    console.print_delete_user()
+    username = input("\nIngrese el Username del Usuario que desea eliminar: ")
+    filter = {"username": username}
+    res = collection.delete_one(filter)
+    if res.deleted_count == 0:
+        print("Usuario no encontrado.")
+        return
+    
+    print("Usuario eliminado exitosamente!")
+    print(f"Documentos eliminados: {res.deleted_count}")
