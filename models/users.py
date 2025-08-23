@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from models.connection import collection
 from views import console
 
+
 class Adress(BaseModel):
     country: str
     state: str
@@ -19,7 +20,6 @@ class User(BaseModel):
 
     def save(self):
         collection.insert_one(self.model_dump())
-
 
 
 def find_all_users():
@@ -45,9 +45,9 @@ def find_all_users():
 def find_username(username):
     data = collection.find_one({"username": username}, {"_id": 0})
     if not data:
-      print("Usuario no encontrado.")
-      return
-    
+        print("Usuario no encontrado.")
+        return
+
     print("""\n====== RESULTADOS de la busqueda =====""")
 
     user = User(**data)
