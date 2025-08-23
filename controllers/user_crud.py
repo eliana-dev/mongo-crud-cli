@@ -1,20 +1,22 @@
-from models.users import User, Adress, find_username, find_all_users
+from models.users import User, Adress, find_username
 from models.connection import collection
 from views import console
 
 
-def options_manager():
-    option = int(input("Ingrese el numero según la operación que desee realizar: "))
-    if option == 1:
-        find_all_users()
-    elif option == 2:
-        search_by_username()
-    elif option == 3:
-        insert_user()
-    elif option == 4:
-        update_by_username()
-    elif option == 5:
-        delete_by_username()
+# def options_manager():
+#     option = int(input("Ingrese el numero según la operación que desee realizar: "))
+#     if option == 1:
+#         find_all_users()
+#     elif option == 2:
+#         search_by_username()
+#     elif option == 3:
+#         insert_user()
+#     elif option == 4:
+#         update_by_username()
+#     elif option == 5:
+#         delete_by_username()
+#     elif option == 6:
+#         return
 
 
 def insert_user():
@@ -44,7 +46,6 @@ def insert_user():
 
 
 def search_by_username():
-    # print("\n --- BUSCAR POR USERNAME")
     console.print_find_by_username()
     username = input("Ingrese el username del usuario que desea encontrar: ")
     find_username(username=username)
@@ -111,6 +112,6 @@ def delete_by_username():
     if res.deleted_count == 0:
         print("Usuario no encontrado.")
         return
-    
+
     print("Usuario eliminado exitosamente!")
     print(f"Documentos eliminados: {res.deleted_count}")
