@@ -4,6 +4,7 @@ from views import console
 from colorama import Fore
 
 
+
 class Adress(BaseModel):
     country: str
     state: str
@@ -20,6 +21,7 @@ class User(BaseModel):
     adress: Adress
 
     def save(self):
+      
         collection.insert_one(self.model_dump())
 
 

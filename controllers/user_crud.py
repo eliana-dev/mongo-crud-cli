@@ -11,15 +11,38 @@ def option_manager():
     elif option == 2:
         search_by_username()
     elif option == 3:
-        insert_user()
+        if confirm_operation():
+            print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
+            insert_user()
+        else:
+            print(Fore.LIGHTRED_EX + "Operación cancelada")
     elif option == 4:
-        update_by_username()
+        if confirm_operation():
+            print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
+            update_by_username()
+        else:
+            print(Fore.LIGHTRED_EX + "Operación cancelada")
     elif option == 5:
-        delete_by_username()
+        if confirm_operation():
+            print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
+            delete_by_username()
+        else:
+            print(Fore.LIGHTRED_EX + "Operación cancelada")
     elif option == 6:
         print(" ★ Gracias por usar Mongo Crud Cli")
         return False
     return True
+
+
+def confirm_operation():
+    while True:
+        confirm = input("Desea confirmar la operación? [y/n]: ").lower()
+        if confirm == "y":
+            return True
+        elif confirm == "n":
+            return False
+        else:
+            print("Solo puede ingresar 'y' o 'n'.")
 
 
 def insert_user():
