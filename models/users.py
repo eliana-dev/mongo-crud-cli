@@ -30,8 +30,8 @@ def find_all_users():
     result = collection.find({}, {"_id": 0})
     for doc in result:
         user = User(**doc)
+        print(Fore.LIGHTGREEN_EX + "\n------------------------------")
         print(f"""
-          \n------------------------------
           \n USERNAME = {user.username}
           \n NAME = {user.name}
           \n AGE = {user.age}
