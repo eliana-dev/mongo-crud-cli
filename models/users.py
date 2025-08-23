@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from models.connection import collection
 from views import console
+from colorama import Fore
 
 
 class Adress(BaseModel):
@@ -45,10 +46,10 @@ def find_all_users():
 def find_username(username):
     data = collection.find_one({"username": username}, {"_id": 0})
     if not data:
-        print("Usuario no encontrado.")
+        print(Fore.RED + "Usuario no encontrado.")
         return
 
-    print("""\n====== RESULTADOS de la busqueda =====""")
+    print(Fore.LIGHTBLUE_EX + """\n====== RESULTADOS de la busqueda =====""")
 
     user = User(**data)
     print(f"""

@@ -1,6 +1,7 @@
 from models.users import User, Adress, find_username, find_all_users
 from models.connection import collection
 from views import console
+from colorama import Fore
 
 
 def option_manager():
@@ -19,6 +20,7 @@ def option_manager():
         print(" ★ Gracias por usar Mongo Crud Cli")
         return False
     return True
+
 
 def insert_user():
     # print("------------------------- \n INGRESAR USUARIOS")
@@ -60,10 +62,10 @@ def update_by_username():
 
     data = collection.find_one(filter, out_id)
     if not data:
-        print("Usuario no encontrado.")
+        print(Fore.RED + "Usuario no encontrado.")
         return
 
-    print("Usuario encontrado:", data)
+    print(Fore.LIGHTBLUE_EX + "Usuario encontrado:\n", data)
 
     print(
         "------------------------- \n INGRESAR NUEVOS DATOS (deje vacío para no cambiar)"
@@ -101,7 +103,7 @@ def update_by_username():
 
     res = collection.update_one(filter, update)
     print(
-        f"Documentos modificados: {res.modified_count}"
+        Fore.LIGHTYELLOW_EX + f"Documentos modificados: {res.modified_count}"
     )  # Para mostrar la cantidad de registros que fueron modificados.
 
 
@@ -109,10 +111,18 @@ def delete_by_username():
     console.print_delete_user()
     username = input("\nIngrese el Username del Usuario que desea eliminar: ")
     filter = {"username": username}
+    out_id = {"_id": 0}
+    data = collection.find_one(filter, out_id)
+    if not data:
+        print(Fore.RED + "Usuario no encontrado.")
+        return
+    print(
+        Fore.LIGHTBLUE_EX + "Usuario encontrado:\n", data
+    )  # asi vemos que usuario estamos por eliminar
     res = collection.delete_one(filter)
     if res.deleted_count == 0:
-        print("Usuario no encontrado.")
+        print(Fore.RED + "Usuario no encontrado.")
         return
 
     print("Usuario eliminado exitosamente!")
-    print(f"Documentos eliminados: {res.deleted_count}")
+    print(Fore.LIGHTYELLOW_EX + f"Documentos eliminados: {res.deleted_count}")
