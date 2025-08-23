@@ -1,5 +1,6 @@
 from models.users import User, Adress, find_username, find_all_users
 from models.connection import collection
+from views import console
 
 
 def options_manager():
@@ -15,7 +16,8 @@ def options_manager():
 
 
 def insert_user():
-    print("------------------------- \n INGRESAR USUARIOS")
+    # print("------------------------- \n INGRESAR USUARIOS")
+    console.print_insert_user()
     username = input("Ingrese el username: ")
     name = input("Ingrese el Nombre: ")
     age = int(input("Ingrese la Edad: "))
@@ -40,11 +42,13 @@ def insert_user():
 
 
 def search_by_username():
-    print("\n --- BUSCAR POR USERNAME")
+    # print("\n --- BUSCAR POR USERNAME")
+    console.print_find_by_username()
     username = input("Ingrese el username del usuario que desea encontrar: ")
     find_username(username=username)
 
 def update_by_username():
+    console.print_update_user()
     username = input("Ingrese el username del usuario que desea actualizar: ")
     filter = {"username": username}
     out_id = {"_id": 0}
