@@ -1,0 +1,5 @@
+MONGO_HOST = "localhost"
+MONGO_PORT = 27017
+MONGO_USER = "pepito"
+MONGO_PASS = "perrito"
+MONGO_AUTH_MECHANISM = "SCRAM-SHA-256"
