@@ -2,23 +2,6 @@ from models.users import User, Adress, find_username
 from models.connection import collection
 from views import console
 
-
-# def options_manager():
-#     option = int(input("Ingrese el numero según la operación que desee realizar: "))
-#     if option == 1:
-#         find_all_users()
-#     elif option == 2:
-#         search_by_username()
-#     elif option == 3:
-#         insert_user()
-#     elif option == 4:
-#         update_by_username()
-#     elif option == 5:
-#         delete_by_username()
-#     elif option == 6:
-#         return
-
-
 def insert_user():
     # print("------------------------- \n INGRESAR USUARIOS")
     console.print_insert_user()
