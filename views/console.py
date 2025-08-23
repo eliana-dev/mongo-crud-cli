@@ -1,5 +1,9 @@
+from colorama import Fore, init, Back
+
+init(autoreset=True)
+
 def print_menu():
-    print(r"""
+    print(Fore.LIGHTGREEN_EX + r"""
         ------------------------------
        
        __  _______  _   ____________     __________  __  ______     ________    ____
@@ -8,20 +12,21 @@ def print_menu():
     / /  / / /_/ / /|  / /_/ / /_/ /  / /___/ _, _/ /_/ / /_/ /  / /___/ /____/ /   
    /_/  /_/\____/_/ |_/\____/\____/   \____/_/ |_|\____/_____/   \____/_____/___/   
    
-                                  - By eliiana-VR  -                                                                                
-                                                                                    
-         
-          ▶ 1. Listar usuarios
-          ▶ 2. Buscar un usuario por 'username'
-          ▶ 3. Agregar un nuevo usuario
-          ▶ 4. Actualizar un usuario por 'username'
-          ▶ 5. Eliminar un usuario por 'username'
-          ▶ 6. Salir
-          """)
+                                  - By eliiana-VR  -   """)                                                                        
+    print("""
+          
+    ▶ 1. Listar usuarios
+    ▶ 2. Buscar un usuario por 'username'
+    ▶ 3. Agregar un nuevo usuario
+    ▶ 4. Actualizar un usuario por 'username'
+    ▶ 5. Eliminar un usuario por 'username'
+    ▶ 6. Salir 
+    
+    """)
 
 
 def print_find_all():
-    print(r"""       
+    print(Fore.LIGHTGREEN_EX + r"""       
    __   _     __            __                              _        
   / /  (_)__ / /____ _  ___/ /__    __ _____ __ _____ _____(_)__  ___
  / /__/ (_-</ __/ _ `/ / _  / -_)  / // (_-</ // / _ `/ __/ / _ \(_-<
@@ -29,7 +34,7 @@ def print_find_all():
 
 
 def print_find_by_username():
-    print(r"""
+    print(Fore.LIGHTGREEN_EX + r"""
    ___                                          __  __                               
   / _ )__ _____ _______ _____  ___  ___  ____  / / / /__ ___ _______  ___ ___ _  ___ 
  / _  / // (_-</ __/ _ `/ __/ / _ \/ _ \/ __/ / /_/ (_-</ -_) __/ _ \/ _ `/  ' \/ -_)
@@ -38,7 +43,7 @@ def print_find_by_username():
 
 
 def print_insert_user():
-    print(r"""
+    print(Fore.LIGHTGREEN_EX + r"""
    ____                                                        _        
   /  _/__  ___ ________ ___ ___ _____  __ _____ __ _____ _____(_)__  ___
  _/ // _ \/ _ `/ __/ -_|_-</ _ `/ __/ / // (_-</ // / _ `/ __/ / _ \(_-<
@@ -47,7 +52,7 @@ def print_insert_user():
 
 
 def print_update_user():
-    print(r"""
+    print(Fore.LIGHTGREEN_EX + r"""
    ___      __            ___                                       _    
   / _ |____/ /___ _____ _/ (_)__ ___ _____  __ _____ __ _____ _____(_)__ 
  / __ / __/ __/ // / _ `/ / /_ // _ `/ __/ / // (_-</ // / _ `/ __/ / _ \
@@ -57,7 +62,7 @@ def print_update_user():
 
 
 def print_delete_user():
-    print(r"""
+    print(Fore.LIGHTGREEN_EX + r"""
    _______       _                                        _    
   / __/ (_)_ _  (_)__  ___ _____  __ _____ __ _____ _____(_)__ 
  / _// / /  ' \/ / _ \/ _ `/ __/ / // (_-</ // / _ `/ __/ / _ \
