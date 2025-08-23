@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from models.connection import collection
-
+from views import console
 
 class Adress(BaseModel):
     country: str
@@ -23,6 +23,7 @@ class User(BaseModel):
 
 
 def find_all_users():
+    console.print_find_all()
     result = collection.find({}, {"_id": 0})
     for doc in result:
         user = User(**doc)
@@ -42,10 +43,14 @@ def find_all_users():
 
 
 def find_username(username):
-    result = collection.find_one({"username": username}, {"_id": 0})
+    data = collection.find_one({"username": username}, {"_id": 0})
+    if not data:
+      print("Usuario no encontrado.")
+      return
+    
     print("""\n====== RESULTADOS de la busqueda =====""")
 
-    user = User(**result)
+    user = User(**data)
     print(f"""
           \n------------------------------
           \n USERNAME = {user.username}
