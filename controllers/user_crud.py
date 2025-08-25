@@ -4,21 +4,6 @@ from views import console
 from colorama import Fore, Style
 
 
-def input_string_field(message):
-    while True:
-        value = input(message).strip()
-        if value:
-            return value
-        print(Fore.RED + "El campo no puede quedar vacio")
-
-
-def input_int_field(message):
-    while True:
-        value = input(message).strip()
-        if value.isdigit():
-            return int(value)
-        print(Fore.RED + "Debe ingresar un numero valido")
-
 def option_manager():
     while True:
         option = input("Ingrese el numero según la operación que desee realizar: ")
@@ -42,6 +27,7 @@ def option_manager():
         return False
     return True
 
+
 def confirm_operation():
     while True:
         confirm = input(Style.DIM + "Desea confirmar la operación? [y/n]: ").lower()
@@ -51,6 +37,7 @@ def confirm_operation():
             return False
         else:
             print("Solo puede ingresar 'y' o 'n'.")
+
 
 def insert_user():
     console.print_insert_user()
@@ -132,7 +119,9 @@ def find_all_users():
 
 def update_by_username():
     console.print_update_user()
-    username = input("Ingrese el nombre de usuario para actualizar los datos: ")
+    username = input_string_field(
+        "Ingrese el nombre de usuario para actualizar los datos: "
+    )
     filter = {"username": username}
     out_id = {"_id": 0}
 
@@ -148,7 +137,7 @@ def update_by_username():
     )
     username = input(f"Username [{data['username']}]: ") or data["username"]
     name = input(f"Nombre [{data['name']}]: ") or data["name"]
-    age = input(f"Edad [{data['age']}]: ") or data["age"]
+    age = int_field_only(f"Edad [{data['age']}]: ") or data["age"]
     email = input(f"Email [{data['email']}]: ") or data["email"]
     country = (
         input(f"País [{data['adress']['country']}]: ") or data["adress"]["country"]
@@ -156,7 +145,10 @@ def update_by_username():
     state = input(f"Estado [{data['adress']['state']}]: ") or data["adress"]["state"]
     city = input(f"Ciudad [{data['adress']['city']}]: ") or data["adress"]["city"]
     street = input(f"Calle [{data['adress']['street']}]: ") or data["adress"]["street"]
-    number = input(f"Número [{data['adress']['number']}]: ") or data["adress"]["number"]
+    number = (
+        int_field_only(f"Número [{data['adress']['number']}]: ")
+        or data["adress"]["number"]
+    )
 
     update = {
         "$set": {
@@ -173,11 +165,12 @@ def update_by_username():
             },
         }
     }
-    #
+
     if confirm_operation():
         print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
         res = collection.update_one(filter, update)
         print(Fore.LIGHTYELLOW_EX + f"Documentos modificados: {res.modified_count}")
+    else:
         print(Fore.LIGHTRED_EX + "Operación cancelada")
 
 
@@ -201,3 +194,29 @@ def delete_by_username():
         print(Fore.LIGHTYELLOW_EX + f"Documentos eliminados: {res.deleted_count}")
     else:
         print(Fore.LIGHTRED_EX + "Operación cancelada")
+
+
+def input_string_field(message):
+    while True:
+        value = input(message).strip()
+        if value:
+            return value
+        print(Fore.RED + "El campo no puede quedar vacio")
+
+
+def input_int_field(message):
+    while True:
+        value = input(message).strip()
+        if value.isdigit():
+            return int(value)
+        print(Fore.RED + "Debe ingresar un numero valido")
+
+
+def int_field_only(message):
+    while True:
+        value = input(message).strip()
+        if value == "":
+            return None
+        if value.isdigit():
+            return int(value)
+        print(Fore.RED + "Debe ingresar un número válido")
