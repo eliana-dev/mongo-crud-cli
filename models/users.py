@@ -1,9 +1,5 @@
 from pydantic import BaseModel
 from models.connection import collection
-from views import console
-from colorama import Fore
-
-
 
 class Adress(BaseModel):
     country: str
@@ -23,48 +19,3 @@ class User(BaseModel):
     def save(self):
       
         collection.insert_one(self.model_dump())
-
-
-def find_all_users():
-    console.print_find_all()
-    result = collection.find({}, {"_id": 0})
-    for doc in result:
-        user = User(**doc)
-        print(Fore.LIGHTGREEN_EX + "\n------------------------------")
-        print(f"""
-          \n USERNAME = {user.username}
-          \n NAME = {user.name}
-          \n AGE = {user.age}
-          \n EMAIL = {user.email}
-          \n ----- ADRESS =
-            \n\t COUNTRY = {user.adress.country}
-            \n\t STATE = {user.adress.state}
-            \n\t CITY = {user.adress.city}
-            \n\t STREET = {user.adress.street}
-            \n\t NUMBER = {user.adress.number}
-          """)
-
-
-def find_username(username):
-    data = collection.find_one({"username": username}, {"_id": 0})
-    if not data:
-        print(Fore.RED + "Usuario no encontrado.")
-        return
-
-    print(Fore.LIGHTBLUE_EX + """\n====== RESULTADOS de la busqueda =====""")
-
-    user = User(**data)
-    print(f"""
-          \n------------------------------
-          \n USERNAME = {user.username}
-          \n NAME = {user.name}
-          \n AGE = {user.age}
-          \n EMAIL = {user.email}
-          \n ----- ADRESS =
-            \n\t COUNTRY = {user.adress.country}
-            \n\t STATE = {user.adress.state}
-            \n\t CITY = {user.adress.city}
-            \n\t STREET = {user.adress.street}
-            \n\t NUMBER = {user.adress.number}
-            \n--------------------------------
-          """)

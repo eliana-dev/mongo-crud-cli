@@ -1,4 +1,4 @@
-from models.users import User, Adress, find_username, find_all_users
+from models.users import User, Adress
 from models.connection import collection
 from views import console
 from colorama import Fore, Style
@@ -15,7 +15,7 @@ def option_manager():
     if option == 1:
         find_all_users()
     elif option == 2:
-        search_by_username()
+        find_by_username()
     elif option == 3:
         if confirm_operation():
             print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
@@ -77,12 +77,53 @@ def insert_user():
     user.save()
 
 
-def search_by_username():
+def find_by_username():
     console.print_find_by_username()
     username = input("Ingrese el nombre de usuario que desea buscar: ")
-    find_username(username=username)
+    data = collection.find_one({"username": username}, {"_id": 0})
+    if not data:
+        print(Fore.RED + "Usuario no encontrado.")
+        return
+
+    print(Fore.LIGHTBLUE_EX + """\n====== RESULTADOS de la busqueda =====""")
+
+    user = User(**data)
+    print(f"""
+          \n------------------------------
+          \n USERNAME = {user.username}
+          \n NAME = {user.name}
+          \n AGE = {user.age}
+          \n EMAIL = {user.email}
+          \n ----- ADRESS =
+            \n\t COUNTRY = {user.adress.country}
+            \n\t STATE = {user.adress.state}
+            \n\t CITY = {user.adress.city}
+            \n\t STREET = {user.adress.street}
+            \n\t NUMBER = {user.adress.number}
+            \n--------------------------------
+          """)
+    # find_username(username=username)
 
 
+def find_all_users():
+    console.print_find_all()
+    result = collection.find({}, {"_id": 0})
+    for doc in result:
+        user = User(**doc)
+        print(Fore.LIGHTGREEN_EX + "\n------------------------------")
+        print(f"""
+          \n USERNAME = {user.username}
+          \n NAME = {user.name}
+          \n AGE = {user.age}
+          \n EMAIL = {user.email}
+          \n ----- ADRESS =
+            \n\t COUNTRY = {user.adress.country}
+            \n\t STATE = {user.adress.state}
+            \n\t CITY = {user.adress.city}
+            \n\t STREET = {user.adress.street}
+            \n\t NUMBER = {user.adress.number}
+          """)    
+    
 def update_by_username():
     console.print_update_user()
     username = input("Ingrese el nombre de usuario para actualizar los datos: ")
