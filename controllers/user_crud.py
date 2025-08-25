@@ -52,7 +52,6 @@ def confirm_operation():
 
 
 def insert_user():
-    # print("------------------------- \n INGRESAR USUARIOS")
     console.print_insert_user()
     username = input("Ingrese el Nombre de usuario: ")
     name = input("Ingrese el Nombre: ")
@@ -88,8 +87,8 @@ def find_by_username():
     print(Fore.LIGHTBLUE_EX + """\n====== RESULTADOS de la busqueda =====""")
 
     user = User(**data)
+    print(Fore.LIGHTGREEN_EX + "\n------------------------------")
     print(f"""
-          \n------------------------------
           \n USERNAME = {user.username}
           \n NAME = {user.name}
           \n AGE = {user.age}
@@ -99,11 +98,9 @@ def find_by_username():
             \n\t STATE = {user.adress.state}
             \n\t CITY = {user.adress.city}
             \n\t STREET = {user.adress.street}
-            \n\t NUMBER = {user.adress.number}
-            \n--------------------------------
-          """)
-    # find_username(username=username)
-
+            \n\t NUMBER = {user.adress.number}""")
+    print(Fore.LIGHTGREEN_EX + "\n------------------------------")
+    
 
 def find_all_users():
     console.print_find_all()
@@ -122,8 +119,9 @@ def find_all_users():
             \n\t CITY = {user.adress.city}
             \n\t STREET = {user.adress.street}
             \n\t NUMBER = {user.adress.number}
-          """)    
-    
+          """)
+
+
 def update_by_username():
     console.print_update_user()
     username = input("Ingrese el nombre de usuario para actualizar los datos: ")
