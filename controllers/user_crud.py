@@ -1,11 +1,17 @@
 from models.users import User, Adress, find_username, find_all_users
 from models.connection import collection
 from views import console
-from colorama import Fore
+from colorama import Fore, Style
 
 
 def option_manager():
-    option = int(input("Ingrese el numero según la operación que desee realizar: "))
+    while True:
+        option = input("Ingrese el numero según la operación que desee realizar: ")
+        if option.isdigit() and 1 <= int(option) <= 6:
+            option = int(option)
+            break
+        else:
+            print(Fore.RED + "Ingrese un numero de la lista de opciones")
     if option == 1:
         find_all_users()
     elif option == 2:
@@ -36,7 +42,7 @@ def option_manager():
 
 def confirm_operation():
     while True:
-        confirm = input("Desea confirmar la operación? [y/n]: ").lower()
+        confirm = input(Style.DIM + "Desea confirmar la operación? [y/n]: ").lower()
         if confirm == "y":
             return True
         elif confirm == "n":
