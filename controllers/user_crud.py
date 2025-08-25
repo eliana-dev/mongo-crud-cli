@@ -3,7 +3,6 @@ from models.connection import collection
 from views import console
 from colorama import Fore, Style
 
-
 def option_manager():
     while True:
         option = input("Ingrese el numero según la operación que desee realizar: ")
@@ -17,23 +16,11 @@ def option_manager():
     elif option == 2:
         find_by_username()
     elif option == 3:
-        if confirm_operation():
-            print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
-            insert_user()
-        else:
-            print(Fore.LIGHTRED_EX + "Operación cancelada")
+        insert_user()
     elif option == 4:
-        if confirm_operation():
-            print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
-            update_by_username()
-        else:
-            print(Fore.LIGHTRED_EX + "Operación cancelada")
+        update_by_username()
     elif option == 5:
-        if confirm_operation():
-            print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
-            delete_by_username()
-        else:
-            print(Fore.LIGHTRED_EX + "Operación cancelada")
+             delete_by_username()
     elif option == 6:
         print(" ★ Gracias por usar Mongo Crud Cli")
         return False
@@ -73,12 +60,19 @@ def insert_user():
         email=email,
         adress=adress,
     )
-    user.save()
+    if confirm_operation():
+        print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
+        user.save()
+    else:
+        print(Fore.LIGHTRED_EX + "Operación cancelada")
 
 
 def find_by_username():
     console.print_find_by_username()
-    username = input("Ingrese el nombre de usuario que desea buscar: ")
+    username = ""
+    while not username:
+        username = input("Ingrese el nombre de usuario que desea buscar: ").strip()
+
     data = collection.find_one({"username": username}, {"_id": 0})
     if not data:
         print(Fore.RED + "Usuario no encontrado.")
@@ -100,7 +94,7 @@ def find_by_username():
             \n\t STREET = {user.adress.street}
             \n\t NUMBER = {user.adress.number}""")
     print(Fore.LIGHTGREEN_EX + "\n------------------------------")
-    
+
 
 def find_all_users():
     console.print_find_all()
@@ -138,9 +132,6 @@ def update_by_username():
     print(
         "------------------------- \n INGRESAR NUEVOS DATOS (deje vacío para no cambiar)"
     )
-    # short circuit evaluation con or
-    # pide el valor por input si el valor es "" lo toma como false y toma como valor por defecto lo que esta despues de or
-    # c = a or b -----> si a = false entonces c = b pero si a = true entonces c = a
     username = input(f"Username [{data['username']}]: ") or data["username"]
     name = input(f"Nombre [{data['name']}]: ") or data["name"]
     age = input(f"Edad [{data['age']}]: ") or data["age"]
@@ -168,29 +159,33 @@ def update_by_username():
             },
         }
     }
-
-    res = collection.update_one(filter, update)
-    print(
-        Fore.LIGHTYELLOW_EX + f"Documentos modificados: {res.modified_count}"
-    )  # Para mostrar la cantidad de registros que fueron modificados.
+    #
+    if confirm_operation():
+        print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
+        res = collection.update_one(filter, update)
+        print(
+            Fore.LIGHTYELLOW_EX + f"Documentos modificados: {res.modified_count}"
+        )  
+        print(Fore.LIGHTRED_EX + "Operación cancelada")
 
 
 def delete_by_username():
     console.print_delete_user()
-    username = input("\nIngrese el nombre de usuario para eliminar los datos: ")
+    username = ""
+    while not username:
+        username = input(
+            "\nIngrese el nombre de usuario para eliminar los datos: "
+        ).strip()
     filter = {"username": username}
     out_id = {"_id": 0}
     data = collection.find_one(filter, out_id)
     if not data:
         print(Fore.RED + "Usuario no encontrado.")
         return
-    print(
-        Fore.LIGHTBLUE_EX + "Usuario encontrado:\n", data
-    )  # asi vemos que usuario estamos por eliminar
-    res = collection.delete_one(filter)
-    if res.deleted_count == 0:
-        print(Fore.RED + "Usuario no encontrado.")
-        return
-
-    print("Usuario eliminado exitosamente!")
-    print(Fore.LIGHTYELLOW_EX + f"Documentos eliminados: {res.deleted_count}")
+    print(Fore.LIGHTBLUE_EX + "Usuario encontrado:\n", data)
+    if confirm_operation():
+        print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
+        res = collection.delete_one(filter)
+        print(Fore.LIGHTYELLOW_EX + f"Documentos eliminados: {res.deleted_count}")
+    else:
+        print(Fore.LIGHTRED_EX + "Operación cancelada")
