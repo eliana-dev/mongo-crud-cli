@@ -3,6 +3,22 @@ from models.connection import collection
 from views import console
 from colorama import Fore, Style
 
+
+def input_string_field(message):
+    while True:
+        value = input(message).strip()
+        if value:
+            return value
+        print(Fore.RED + "El campo no puede quedar vacio")
+
+
+def input_int_field(message):
+    while True:
+        value = input(message).strip()
+        if value.isdigit():
+            return int(value)
+        print(Fore.RED + "Debe ingresar un numero valido")
+
 def option_manager():
     while True:
         option = input("Ingrese el numero según la operación que desee realizar: ")
@@ -20,12 +36,11 @@ def option_manager():
     elif option == 4:
         update_by_username()
     elif option == 5:
-             delete_by_username()
+        delete_by_username()
     elif option == 6:
         print(" ★ Gracias por usar Mongo Crud Cli")
         return False
     return True
-
 
 def confirm_operation():
     while True:
@@ -37,18 +52,17 @@ def confirm_operation():
         else:
             print("Solo puede ingresar 'y' o 'n'.")
 
-
 def insert_user():
     console.print_insert_user()
-    username = input("Ingrese el Nombre de usuario: ")
-    name = input("Ingrese el Nombre: ")
-    age = int(input("Ingrese la Edad: "))
-    email = input("Ingrese el Email: ")
-    country = input("Ingrese el Pais: ")
-    state = input("Ingrese el Estado : ")
-    city = input("Ingrese la Ciudad: ")
-    street = input("Ingrese la Calle: ")
-    number = int(input("Ingrese el Numero de calle: "))
+    username = input_string_field("Ingrese el Nombre de usuario: ")
+    name = input_string_field("Ingrese el Nombre: ")
+    age = int(input_int_field("Ingrese la Edad: "))
+    email = input_string_field("Ingrese el Email: ")
+    country = input_string_field("Ingrese el Pais: ")
+    state = input_string_field("Ingrese el Estado : ")
+    city = input_string_field("Ingrese la Ciudad: ")
+    street = input_string_field("Ingrese la Calle: ")
+    number = int(input_int_field("Ingrese el Numero de calle: "))
 
     adress = Adress(
         country=country, state=state, city=city, street=street, number=number
@@ -163,9 +177,7 @@ def update_by_username():
     if confirm_operation():
         print(Fore.LIGHTGREEN_EX + "Operacion confirmada!")
         res = collection.update_one(filter, update)
-        print(
-            Fore.LIGHTYELLOW_EX + f"Documentos modificados: {res.modified_count}"
-        )  
+        print(Fore.LIGHTYELLOW_EX + f"Documentos modificados: {res.modified_count}")
         print(Fore.LIGHTRED_EX + "Operación cancelada")
 
 
