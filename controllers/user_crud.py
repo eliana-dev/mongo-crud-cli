@@ -54,7 +54,7 @@ def confirm_operation():
 def insert_user():
     # print("------------------------- \n INGRESAR USUARIOS")
     console.print_insert_user()
-    username = input("Ingrese el username: ")
+    username = input("Ingrese el Nombre de usuario: ")
     name = input("Ingrese el Nombre: ")
     age = int(input("Ingrese la Edad: "))
     email = input("Ingrese el Email: ")
@@ -79,13 +79,13 @@ def insert_user():
 
 def search_by_username():
     console.print_find_by_username()
-    username = input("Ingrese el username del usuario que desea encontrar: ")
+    username = input("Ingrese el nombre de usuario que desea buscar: ")
     find_username(username=username)
 
 
 def update_by_username():
     console.print_update_user()
-    username = input("Ingrese el username del usuario que desea actualizar: ")
+    username = input("Ingrese el nombre de usuario para actualizar los datos: ")
     filter = {"username": username}
     out_id = {"_id": 0}
 
@@ -138,7 +138,7 @@ def update_by_username():
 
 def delete_by_username():
     console.print_delete_user()
-    username = input("\nIngrese el Username del Usuario que desea eliminar: ")
+    username = input("\nIngrese el nombre de usuario para eliminar los datos: ")
     filter = {"username": username}
     out_id = {"_id": 0}
     data = collection.find_one(filter, out_id)
