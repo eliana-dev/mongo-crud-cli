@@ -12,7 +12,7 @@ El proyecto está desarrollado en **Python** y utiliza librerías como:
 - **pydantic**: para validar y serializar los datos de entrada.
 
 - **colorama**: para agregar estilo y color a los mensajes en la terminal.
-
+## 💻 Operaciones 
 ### 📖 Listar usuarios
 Muestra a todos los usuarios que se encuentran almacenados en la base de datos.
 
